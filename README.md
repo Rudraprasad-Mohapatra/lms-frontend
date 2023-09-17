@@ -23,3 +23,7 @@
 ```
     npm run dev
 ```
+
+### Setup instructions for Tailwind CSS
+
+[Setting up Tailwind CSS in a Vite project.](https://tailwindcss.com/docs/guides/vite)
