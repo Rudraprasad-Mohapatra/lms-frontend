@@ -27,3 +27,10 @@
 ### Setup instructions for Tailwind CSS
 
 [Setting up Tailwind CSS in a Vite project.](https://tailwindcss.com/docs/guides/vite)
+
+
+### Adding pugins and dependencies
+
+```
+npm install @reduxjs/toolkit react-redux react-router-dom react-icons react-chartjs-2 chart.js daisyui axios react-hot-toast @tailwindcss/line-clamp
+```
