@@ -28,6 +28,11 @@
 
 [Setting up Tailwind CSS in a Vite project.](https://tailwindcss.com/docs/guides/vite)
 
+1. Add the following details in the plugin property of tailwind config
+```
+      [require("daisyui"), require("@tailwindcss/line-clamp")]
+```
+
 
 ### Adding pugins and dependencies
 
