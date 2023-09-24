@@ -11,19 +11,36 @@ const initialState = {
 
 export const createAccount = createAsyncThunk("/auth/signup", async (data) => {
     try {
-        const res = axiosInstance.post("user/register", data);
-        toast.promise(res, {
-            loading: "Wait creating your account",
-            success: (data) => {
-                return data?.data?.message;
-            },
-            error: "Failed to create account"
-        })
-        return res.data;
+        // const res = axiosInstance.post("user/register", data);
+
+        // toast.promise(res, {
+        //     loading: "Wait! creating your account",
+        //     success: (data) => {
+        //         return data?.data?.message;
+        //     },
+        //     error: "Failed to create account"
+        // });
+        // console.log(res);
+        // return res.data;
+        const response = await axiosInstance.post("user/register", data);
+        console.log("Hii");
+        console.log(response);
+        const responseData = response.data; // Extract data from the response
+        console.log(responseData);
+        // Show toast messages based on the response data
+        toast.success(responseData?.message || "Operation Succeeded");
+        console.log(response);
+        // Return the response data
+        return responseData;
     } catch (error) {
-        toast.error(error?.response?.data?.message);
+        // toast.error(error?.response?.data?.message);
+        toast.error(error.message);
     }
+
 })
+
+
+
 
 const authSlice = createSlice({
     name: 'auth',

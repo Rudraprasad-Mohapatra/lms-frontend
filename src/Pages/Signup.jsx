@@ -6,6 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 import HomeLayout from "../Layouts/HomeLayout";
 import { createAccount } from "../Redux/Slice/AuthSlice";
+// import { createAccount } from "../Redux/Slice/AuthSlice";
 function Signup() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -81,9 +82,8 @@ function Signup() {
         formData.append("email", signupData.email);
         formData.append("password", signupData.password);
         formData.append("avatar", signupData.avatar);
-
-        // dispatch create account action
-        const response = await dispatch(createAccount(formData))
+        
+        const response = await dispatch(createAccount(formData));
         console.log(response);
         if(response?.payload?.success)
             navigate("/");
