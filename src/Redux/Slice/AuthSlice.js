@@ -22,16 +22,30 @@ export const createAccount = createAsyncThunk("/auth/signup", async (data) => {
         // });
         // console.log(res);
         // return res.data;
-        const response = await axiosInstance.post("user/register", data);
-        console.log("Hii");
-        console.log(response);
-        const responseData = response.data; // Extract data from the response
-        console.log(responseData);
-        // Show toast messages based on the response data
-        toast.success(responseData?.message || "Operation Succeeded");
-        console.log(response);
-        // Return the response data
-        return responseData;
+        // ---------------------------------------
+        // const response = await axiosInstance.post("user/register", data);
+        // console.log("Hii");
+        // console.log(response);
+        // const responseData = response.data; // Extract data from the response
+        // console.log(responseData);
+        // // Show toast messages based on the response data
+        // toast.success(responseData?.message || "Operation Succeeded");
+        // console.log(response);
+        // // Return the response data
+        // return responseData;
+        // ----------------------------------------
+        axiosInstance.post("user/register", data,  { withCredentials: true })
+            .then(response => {
+                // Handle a successful response here
+                console.log(response.data); // This will log the data received from the server
+                toast.success(response.data?.message || "Operation Succeeded");
+            })
+            .catch(error => {
+                // Handle any errors that occurred during the request
+                console.log(error.message);
+                toast.error(error.message);
+            });
+
     } catch (error) {
         // toast.error(error?.response?.data?.message);
         toast.error(error.message);
