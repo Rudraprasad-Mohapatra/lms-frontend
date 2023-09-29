@@ -6,7 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 import HomeLayout from "../Layouts/HomeLayout";
 import { createAccount } from "../Redux/Slice/AuthSlice";
-// import { createAccount } from "../Redux/Slice/AuthSlice";
+
 function Signup() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -48,6 +48,7 @@ function Signup() {
     }
 
     async function createNewAccount(event) {
+        console.log("clicked");
         event.preventDefault();
         if (!signupData.email ||
             !signupData.password ||
