@@ -9,17 +9,15 @@ const initialState = {
 
 export const getAllCourses = createAsyncThunk("/course/get", async () => {
     try {
-        const response = axiosInstance.get("/course");
-        toast.promise(response, {
+        const res = axiosInstance.get("/course/");
+        toast.promise(res, {
             loading: "loading course data...",
             success: "Course loaded successfully",
             error: "Failed to get the courses"
         });
-        const finalRes = (await response).data.courses;
-        console.log("finalres is ",finalRes);
-        return finalRes;
+        return (await res).data.courses;
     } catch (error) {
-        toast.error(error?.response?.data?.mssage);
+        toast.error(error?.response?.data?.message);
     }
 
 })
@@ -31,10 +29,10 @@ const courseSlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(getAllCourses.fulfilled, (state, action) => {
-                if(action.payload){
+                if (action.payload) {
                     console.log("Action is", action);
                     state.courseData = [...action.payload];
-                    console.log("CourseData is ",state.courseData);
+                    console.log("CourseData is ", state.courseData);
                 }
             })
     }
