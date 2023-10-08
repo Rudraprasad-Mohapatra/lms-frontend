@@ -15,7 +15,7 @@ function Profile() {
                 <div className="py-10 px-10 flex flex-col gap-4 rounded-lg text-white w-96 shadow-[0_0_10px_black]">
                     <img
                         src={userdata?.avatar?.secure_url} alt="Profile Photo"
-                        className="w-40 m-auto rounded-full border border-black" />
+                        className="w-40 h-40 m-auto rounded-full border border-black" />
                     <h3 className="text-xl font-semibold text-center capitalize">
                         {userdata?.fullName}
                     </h3>
@@ -30,7 +30,7 @@ function Profile() {
                             <button>Change Password</button>
                         </Link>
                         <Link
-                            to="/changepassword" className="w-1/2 bg-yellow-600 hover:bg-yellow-500 transition-all ease-in-out duration-300 rounded-xl font-semibold cursor-pointer p-1 text-center">
+                            to="/user/editprofile" className="w-1/2 bg-yellow-600 hover:bg-yellow-500 transition-all ease-in-out duration-300 rounded-xl font-semibold cursor-pointer p-1 text-center">
                             <button>Edit Profile</button>
                         </Link>
                     </div>
