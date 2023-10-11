@@ -24,6 +24,7 @@ export const getRazorpayId = createAsyncThunk("/razorpay/getId", async () => {
 export const purchaseCourseBundle = createAsyncThunk("/purchaseCourse", async () => {
     try {
         const response = await axiosInstance.post("/payments/subscribe");
+        console.log("PC: ",response);
         return response.data;
     } catch (error) {
         toast.error(error?.response?.data?.message);
