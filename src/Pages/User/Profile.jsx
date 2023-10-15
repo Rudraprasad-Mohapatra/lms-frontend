@@ -45,7 +45,7 @@ function Profile() {
                             <button>Edit Profile</button>
                         </Link>
                     </div>
-                    {userdata?.subscription?.status === "created" && (
+                    {userdata?.subscription?.status === "active" && (
                         <button onClick={handleCancellation} className="w-full bg-red-600 hover:bg-red-500 transition-all ease-in-out duration-300 rounded-xl font-semibold cursor-pointer p-1">
                             Cancel Subscription
                         </button>
