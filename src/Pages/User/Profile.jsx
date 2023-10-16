@@ -23,7 +23,7 @@ function Profile() {
     return (
         <HomeLayout>
             <div className="min-h-[90vh] flex items-center justify-center">
-                <div className="py-10 px-10 flex flex-col gap-4 rounded-lg text-white w-96 shadow-[0_0_10px_black]">
+                <div className="py-10 px-10 flex flex-col gap-4 rounded-lg text-white w-96 shadow-[0_0_10px_black] break-words">
                     <img
                         src={userdata?.avatar?.secure_url} alt="Profile Photo"
                         className="w-40 h-40 m-auto rounded-full border border-black" />
