@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 
 import HomeLayout from "../../Layouts/HomeLayout";
-import { getCourseLectures } from "../../Redux/Slice/LectureSlice";
+import { deleteCourseLecture, getCourseLectures } from "../../Redux/Slice/LectureSlice";
 
 function DisplayLectures() {
 
@@ -22,14 +22,20 @@ function DisplayLectures() {
         dispatch(getCourseLectures(state._id));
 
     }, [])
-    console.log("HII");
+
+    async function onLectureDelete(courseId, lectureId) {
+        console.log(courseId);
+        console.log(lectureId);
+        await dispatch(deleteCourseLecture(courseId, lectureId));
+        await dispatch(getCourseLectures(courseId));
+    }
     return (
         <HomeLayout>
             <div className="flex flex-col gap-10 items-center justify-center min-h-[90vh] py-10 text-white mx-[5%]">
                 <div className="text-center text-2xl font-semibold text-yellow-500">
                     Course Name : {state.title}
                 </div>
-                <div className="flex justify-center gap-10 w-full">
+                {lectures && lectures.length > 0 && <div className="flex justify-center gap-10 w-full">
                     {/* left section for playing video and displaying course details to admin */}
                     <div className="space-y-5 w-[28rem] p-2 rounded-lg shadow-[0_0_10px_black]">
                         <video
@@ -60,10 +66,11 @@ function DisplayLectures() {
 
                     {/* right section for displaying list of lectures */}
                     <ul className="w-[28rem] p-2 rounded-lg shadow-[0_0_10px_black]">
-                        <li>
+                        <li className="font-semibold text-xl text-yellow-500 flex items-center justify-between">
                             <p>Lectures List</p>
                             {role === "ADMIN" && (
-                                <button className="btn-primary px-2 py-1 rounded-md font-semibold text-sm">
+                                <button
+                                    onClick={() => navigate("/course/addlecture", { state: { ...state } })} className="btn-primary px-2 py-1 rounded-md font-semibold text-sm">
                                     Add new lecture
                                 </button>
                             )}
@@ -76,12 +83,19 @@ function DisplayLectures() {
                                             <span>
                                                 {" "} Lecture {idx + 1} : {" "}
                                             </span>
+                                            {lecture?.title}
                                         </p>
+                                        {role === "ADMIN" && (
+                                            <button
+                                                onClick={() => onLectureDelete(state?._id, lecture?._id)} className="btn-accent px-2 py-1 rounded-md font-semibold text-sm">
+                                                Delete lecture
+                                            </button>
+                                        )}
                                     </li>
                                 )
                             })}
                     </ul>
-                </div>
+                </div>}
             </div>
         </HomeLayout>
     );
