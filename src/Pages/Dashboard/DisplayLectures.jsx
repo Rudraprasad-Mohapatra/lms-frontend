@@ -24,11 +24,12 @@ function DisplayLectures() {
     }, [])
 
     async function onLectureDelete(courseId, lectureId) {
-        console.log(courseId);
-        console.log(lectureId);
-        await dispatch(deleteCourseLecture(courseId, lectureId));
+        console.log("I am coureId", courseId);
+        console.log("I am lectureId", lectureId);
+        await dispatch(deleteCourseLecture({ courseId, lectureId }));
         await dispatch(getCourseLectures(courseId));
     }
+    
     return (
         <HomeLayout>
             <div className="flex flex-col gap-10 items-center justify-center min-h-[90vh] py-10 text-white mx-[5%]">
@@ -76,11 +77,16 @@ function DisplayLectures() {
                                 </button>
                             )}
                         </li>
+
                         {lectures &&
                             lectures.map((lecture, idx) => {
                                 return (
                                     <li className="space-y-2" key={lecture._id}>
-                                        <p className="cursor-pointer" onClick={() => setCurrentVideo(idx)}>
+                                        <hr />
+                                        <p className="cursor-pointer"
+                                            onClick={() => {
+                                                setCurrentVideo(idx)
+                                            }}>
                                             <span>
                                                 {" "} Lecture {idx + 1} : {" "}
                                             </span>
@@ -88,10 +94,11 @@ function DisplayLectures() {
                                         </p>
                                         {role === "ADMIN" && (
                                             <button
-                                                onClick={() => onLectureDelete(state?._id, lecture?._id)} className="btn-accent px-2 py-1 rounded-md font-semibold text-sm">
+                                                onClick={() => onLectureDelete(state?._id, idx)} className="btn-accent px-2 py-1 rounded-md font-semibold text-sm">
                                                 Delete lecture
                                             </button>
                                         )}
+                                        <hr />
                                     </li>
                                 )
                             })}

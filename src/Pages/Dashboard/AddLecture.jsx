@@ -8,8 +8,8 @@ import HomeLayout from "../../Layouts/HomeLayout";
 import { addCourseLecture } from "../../Redux/Slice/LectureSlice";
 
 function AddLecture() {
-    const courseDetails = useLocation();
-    // console.log("I am coursedetails", courseDetails);
+    const courseDetails = useLocation().state;
+    console.log("I am coursedetails", courseDetails);
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -32,7 +32,7 @@ function AddLecture() {
     function handleVideo(e) {
         const video = e.target.files[0];
         const source = window.URL.createObjectURL(video);
-        console.log("I am ",video," and I am ",source)
+        console.log("I am ", video, " and I am ", source)
         setUserInput({
             ...userInput,
             lecture: video,
@@ -49,6 +49,7 @@ function AddLecture() {
         console.log("I am userInput", userInput);
         const response = await dispatch(addCourseLecture(userInput));
         if (response?.payload?.success) {
+            navigate(-1);
             setUserInput({
                 id: courseDetails._id,
                 lecture: undefined,
@@ -83,7 +84,7 @@ function AddLecture() {
                             name="title"
                             placeholder="Enter the title of the lecture"
                             onChange={handleInputChange}
-                            className="bg-transparent px-3 py-1 border border-stone-900 rounded-lg active:border-stone-950"
+                            className="bg-transparent px-3 py-1 border-2 border-stone-900 rounded-lg active:border-stone-950"
                             value={userInput.title}
                         />
                         <textarea
@@ -91,7 +92,7 @@ function AddLecture() {
                             name="description"
                             placeholder="Enter the dscription of the lecture"
                             onChange={handleInputChange}
-                            className="bg-transparent px-3 py-1 border border-stone-900 rounded-lg min-h-[50px] max-h-[300px] overflow-y-scroll active:border-stone-950"
+                            className="bg-transparent px-3 py-1 border-2 border-stone-900 rounded-lg min-h-[50px] max-h-[300px] overflow-y-scroll active:border-stone-950"
                             value={userInput.description}
                         />
                         {
@@ -109,7 +110,7 @@ function AddLecture() {
 
                                 </video>
                             ) : (
-                                <div className="h-48 border flex items-center justify-center cursor-pointer">
+                                <div className="h-48 border-2 flex items-center justify-center cursor-pointer">
                                     <label htmlFor="lecture"
                                         className="font-semibold text-xl cursor-pointer">
                                         Choose your video
