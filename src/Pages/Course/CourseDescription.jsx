@@ -53,7 +53,7 @@ function CourseDescription() {
                         </h1>
 
                         <p className="text-yellow-500">Course Description</p>
-                        <p>{state.description}</p>
+                        <p className="line-clamp-3 max-w-prose">{state.description}</p>
                     </div>
                 </div>
             </div>

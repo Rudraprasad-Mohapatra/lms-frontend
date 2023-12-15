@@ -29,7 +29,7 @@ function DisplayLectures() {
         await dispatch(deleteCourseLecture({ courseId, lectureId }));
         await dispatch(getCourseLectures(courseId));
     }
-    
+
     return (
         <HomeLayout>
             <div className="flex flex-col gap-10 items-center justify-center min-h-[90vh] py-10 text-white mx-[5%]">
@@ -41,7 +41,9 @@ function DisplayLectures() {
                     {/* left section for playing video and displaying course details to admin */}
                     <div className="space-y-5 w-[28rem] p-2 rounded-lg shadow-[0_0_10px_black]">
                         <video
-                            src={lectures && lectures[currentVideo]?.lecture?.secure_url} className="object-fill rounded-tl-lg rounded-tr-lg w-full"
+                            key={lectures && lectures[currentVideo]?.lecture?.secure_url} 
+                            src={lectures && lectures[currentVideo]?.lecture?.secure_url} 
+                            className="object-fill rounded-tl-lg rounded-tr-lg w-full"
                             controls
                             disablePictureInPicture
                             muted
@@ -77,6 +79,11 @@ function DisplayLectures() {
                                 </button>
                             )}
                         </li>
+                        {lectures && lectures.length === 0 && (
+                            <li className="font-semibold text-xl text-yellow-500 w-full flex items-center justify-center">
+                                <p>OOPS !! No Lectures Found 🥺</p>
+                            </li>
+                        )}
 
                         {lectures &&
                             lectures.map((lecture, idx) => {

@@ -26,7 +26,7 @@ function CourseList() {
                     Explore the course made by
                 <span className="font-bold text-yellow-500">Industry Experts</span>
                 </h1>
-                <div className="mb-10 flex flex-wrap gap-14">
+                <div className="mb-10 flex items-center justify-center flex-wrap gap-14">
                     {courseData?.map((element) => {
                         // console.log(element);
                         return <Coursecard key={element._id} data={element} />
