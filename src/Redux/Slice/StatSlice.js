@@ -4,8 +4,8 @@ import toast from "react-hot-toast";
 import axiosInstance from "../../Helpers/axiosInstance";
 
 const initialState = {
-    allUsersCount: 0,
-    subscribedCount: 0
+    allUsersCount: 30,
+    subscribedCount: 50
 };
 
 
@@ -25,13 +25,16 @@ export const getStatsData = createAsyncThunk("stats/get", async () => {
         toast.error(error?.response?.data?.message);
     }
 })
-const stateSlice = createSlice({
+const statSlice = createSlice({
     name: "stat",
     initialState,
     reducers: {},
-    extraReducers: () => {
-
+    extraReducers: (builder) => {
+        builder.addCase(getStatsData.fulfilled, (state, action) => {
+            state.allUsersCount = action?.payload?.allUsersCount || 50;
+            state.subscribedCount = action?.payload?.subscribedUserCount || 30;
+        })
     }
 });
 
-export default stateSlice;
+export default statSlice.reducer;
