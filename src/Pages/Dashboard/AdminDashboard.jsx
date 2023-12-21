@@ -1,7 +1,9 @@
 import { ArcElement, BarElement, CategoryScale, Chart as ChartJS, Legend, LinearScale, Title, Tooltip } from "chart.js";
 import { useEffect } from "react";
-import { Pie } from "react-chartjs-2";
+import { Bar, Pie } from "react-chartjs-2";
 import { FaUsers } from "react-icons/fa";
+import { FcSalesPerformance } from "react-icons/fc";
+import { GiMoneyStack } from "react-icons/gi";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
@@ -38,10 +40,10 @@ function AdminDashboard() {
     const salesData = {
         labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
         fontColor: "white",
-        dataSets: [
+        datasets: [
             {
                 label: "Sales / Month",
-                data: monthlySalesRecord,
+                data: [10, 20, 30, 40, 50, 60, 70],
                 backgroundColor: ["rgb(255, 99, 132)"],
                 borderColor: ["White"],
                 borderWidth: 2
@@ -73,18 +75,20 @@ function AdminDashboard() {
         <HomeLayout>
 
             <div className="min-h-[90vh] pt-5 flex flex-col flex-wrap gap-10 text-white">
-                <h1 className="text-center text-5xl font-semibold text-yellow-500">
+                {/* Heading */}
+                <h1 className="text-center sm:text-3xl md:text-5xl font-semibold text-yellow-500 sm:m-6">
                     Admin Dashboard
                 </h1>
 
-                <div className="grid grid-cols-2 gap-5 m-auto mx-10">
-                    <div className="flex flex-col items-center gap-10 p-5 shadow-2xl shadow-slate-700 rounded-md">
-                        <div className="w-80 h-80">
+                <div className="flex flex-wrap gap-5 m-auto mx-10">
+                    {/* 1st child */}
+                    <div className="flex flex-1 flex-col items-center gap-10 p-5 shadow-lg shadow-slate-700 rounded-md">
+                        <div className="w-80 h-80 transform transition-transform duration-500 hover:scale-105">
                             <Pie data={userData} />
                         </div>
 
                         <div className="grid grid-cols-2 gap-5">
-                            <div className="flex flex-wrap items-center justify-center p-5 gap-5 rounded-md shadow-md border-zinc-900 border-2">
+                            <div className="flex flex-wrap items-center justify-center p-5 gap-5 rounded-md shadow-md border-zinc-900 border-2 transform transition-transform duration-500 hover:scale-105">
                                 <div className="flex flex-col items-center">
                                     <p className="font-semi-bold flex flex-wrap items-center gap-2 justify-center">
                                         <span>Registered</span>
@@ -95,7 +99,7 @@ function AdminDashboard() {
                                 <FaUsers className="text-yellow-500 text-5xl" />
                             </div>
 
-                            <div className="flex flex-wrap items-center justify-center p-5 gap-5 rounded-md shadow-md border-zinc-900 border-2">
+                            <div className="flex flex-wrap items-center justify-center p-5 gap-5 rounded-md shadow-md border-zinc-900 border-2 transform transition-transform duration-500 hover:scale-105">
                                 <div className="flex flex-col items-center">
                                     <p className="font-semi-bold flex flex-wrap gap-2 items-center justify-center">
                                         <span>Subscribed</span>
@@ -107,6 +111,80 @@ function AdminDashboard() {
                             </div>
                         </div>
                     </div>
+
+                    {/* 2nd child*/}
+
+                    <div className="flex flex-1 flex-col items-center gap-10 p-5 shadow-lg shadow-slate-700 rounded-md">
+                        <div className="w-80 h-80 relative transform transition-transform duration-500 hover:scale-105">
+                            <Bar className="absolute bottom-0 h-80 w-full" data={salesData} />
+                        </div>
+                        <div className="grid grid-cols-2 gap-5">
+                            <div className="flex flex-wrap items-center justify-center p-5 gap-5 rounded-md shadow-md border-zinc-900 border-2  transform transition-transform duration-500 hover:scale-105">
+                                <div className="flex flex-col items-center">
+                                    <p className="font-semi-bold flex flex-wrap items-center gap-2 justify-center">
+                                        <span>Subscription</span>
+                                        <span>Count</span>
+                                    </p>
+                                    <h3 className="text-4xl font-bold">{allPayments?.count || 30}</h3>
+                                </div>
+                                <FcSalesPerformance className="text-yellow-500 text-5xl" />
+                            </div>
+
+                            <div className="flex flex-wrap items-center justify-center p-5 gap-5 rounded-md shadow-md border-zinc-900 border-2 transform transition-transform duration-500 hover:scale-105">
+                                <div className="flex flex-col items-center">
+                                    <p className="font-semi-bold flex flex-wrap gap-2 items-center justify-center">
+                                        <span>Total</span>
+                                        <span>Revenue</span>
+                                    </p>
+                                    <h3 className="text-4xl font-bold">{(allPayments?.count || 33) * 499}</h3>
+                                </div>
+                                <GiMoneyStack className="text-green-500 text-5xl" />
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                {/* 3rd child */}
+                <div className="mx-[10%] w-[80%] self-center flex flex-col items-center justify-center gap-10 mb-10">
+                    <div className="flex w-full items-center justify-between">
+                        <h1 className="text-center text-3xl font-semibold">
+                            Course Overview
+                        </h1>
+
+                        <button className="w-fit bg-yellow-500 hover:bg-yellow-600 transition-all duration-300 rounded-md py-2 px-4 font-semibold text-lg" onClick={() => { navigate("/course/create") }}>
+                            Create Course
+                        </button>
+                    </div>
+
+                    {/* 3rd child */}
+                    <table className="table overflow-x-scroll">
+                        <thead>
+                            <tr>
+                                <th>S No</th>
+                                <th>Course Title</th>
+                                <th>Course category</th>
+                                <th>Instructor</th>
+                                <th>Total lectures</th>
+                                <th>Description</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {myCourses?.map((course, idx) => {
+                                return (
+                                    <tr key={course?.id}>
+                                        <td>{idx + 1}</td>
+                                        <td>{course?.title}</td>
+                                        <td>{course?.category}</td>
+                                        <td>{course?.createdBy}</td>
+                                        <td>{course.numbersOfLectures}</td>
+                                        <td>{course?.description}</td>
+                                        <td>Actions</td>
+                                    </tr>
+                                );
+                            })}
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </HomeLayout>
