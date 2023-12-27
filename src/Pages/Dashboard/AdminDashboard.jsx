@@ -1,5 +1,5 @@
 import { ArcElement, BarElement, CategoryScale, Chart as ChartJS, Legend, LinearScale, Title, Tooltip } from "chart.js";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Bar, Pie } from "react-chartjs-2";
 import { BsCollectionPlayFill, BsTrash } from "react-icons/bs"
 import { FaUsers } from "react-icons/fa";
@@ -8,6 +8,7 @@ import { GiMoneyStack } from "react-icons/gi";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
+import Loader from "../../Components/Loader/Loader.jsx";
 import HomeLayout from "../../Layouts/HomeLayout";
 import { deleteCourse, getAllCourses } from "../../Redux/Slice/CourseSlice.js";
 import { getPaymentRecord } from "../../Redux/Slice/RazorPaySlice.js";
@@ -18,10 +19,12 @@ ChartJS.register(ArcElement, BarElement, CategoryScale, Legend, LinearScale, Tit
 function AdminDashboard() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-
+    
     const { allUsersCount, subscribedCount } = useSelector((state) => state.stat);
-
+    
     const { allPayments, finalMonths, monthlySalesRecord } = useSelector((state) => state.razorpay);
+    
+    const [loading, setLoading] = useState(false);
 
     const userData = {
         labels: ["Registered User", "Enrolled User"],
@@ -56,9 +59,18 @@ function AdminDashboard() {
 
     async function onCourseDelete(id) {
         if (window.confirm("Are you sure you want to delete the course ? ")) {
+            setLoading(true);
             const res = await dispatch(deleteCourse(id));
+            console.log(res);
             if (res?.payload?.success) {
-                await dispatch(getAllCourses);
+                // The state might not have updated immediately after dispatching deleteCourse
+                // Wait for a short time before dispatching getAllCourses
+                setTimeout(async () => {
+                    await dispatch(getAllCourses());
+                    // Now, you can log the updated myCourses
+                    console.log(myCourses);
+                    setLoading(false);
+                }, 3000); // Adjust the timeout duration as needed
             }
         }
     }
@@ -192,7 +204,7 @@ function AdminDashboard() {
                                                     className="w-80 h-auto bg-transparent resize-none ">
                                                 </textarea>
                                             </td>
-                                            <td className="text-center max-w-2xl">
+                                            <td className="text-center w-96">
                                                 <button className="bg-green-500 hover:bg-green-600 transition-all ease-in-out duration-300 text-xl py-2 px-4 rounded-md font-bold"
                                                     onClick={() => navigate("/course/displaylectures", { state: { ...course } })}>
                                                     <BsCollectionPlayFill />
@@ -200,7 +212,7 @@ function AdminDashboard() {
                                                 <button className="bg-red-500 hover:bg-red-600 transition-all ease-in-out duration-300 text-xl py-2 px-4 rounded-md font-bold"
                                                     onClick={() => {
                                                         onCourseDelete(course?._id);
-                                                        }}>
+                                                    }}>
                                                     <BsTrash />
                                                 </button>
                                             </td>
@@ -212,6 +224,7 @@ function AdminDashboard() {
                     </div>
                 </div>
             </div>
+            {loading && <Loader />} {/* Show loader when loading state is true */}
         </HomeLayout>
     )
 }
