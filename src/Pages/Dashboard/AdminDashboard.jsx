@@ -19,11 +19,11 @@ ChartJS.register(ArcElement, BarElement, CategoryScale, Legend, LinearScale, Tit
 function AdminDashboard() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    
+
     const { allUsersCount, subscribedCount } = useSelector((state) => state.stat);
-    
+
     const { allPayments, finalMonths, monthlySalesRecord } = useSelector((state) => state.razorpay);
-    
+
     const [loading, setLoading] = useState(false);
 
     const userData = {
@@ -168,61 +168,61 @@ function AdminDashboard() {
                             Create Course
                         </button>
                     </div>
-
-                    {/* 3rd child */}
-                    <div className="overflow-x-scroll mx-[10%] w-[80%]">
-                        <table className="table">
-                            <thead>
-                                <tr>
-                                    <th className="text-center">S No</th>
-                                    <th className="text-center">Course Title</th>
-                                    <th className="text-center">Course category</th>
-                                    <th className="text-center">Instructor</th>
-                                    <th className="text-center">Total lectures</th>
-                                    <th className="text-center">Description</th>
-                                    <th className="text-center">Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {myCourses?.map((course, idx) => {
-                                    return (
-                                        <tr key={course?._id}>
-                                            <td>{idx + 1}</td>
-                                            <td>
-                                                <textarea readOnly
-                                                    value={course?.title}
-                                                    className="w-40 h-auto bg-transparent resize-none"
-                                                ></textarea>
-                                            </td>
-                                            <td className="text-center">{course?.category}</td>
-                                            <td className="text-center">{course?.createdBy}</td>
-                                            <td className="text-center">{course.numbersOfLectures}</td>
-                                            <td className="max-w-2xl overflow-y-auto text-ellipsis whitespace-nowrap">
-                                                <textarea
-                                                    value={course?.description}
-                                                    readOnly
-                                                    className="w-80 h-auto bg-transparent resize-none ">
-                                                </textarea>
-                                            </td>
-                                            <td className="text-center w-96">
-                                                <button className="bg-green-500 hover:bg-green-600 transition-all ease-in-out duration-300 text-xl py-2 px-4 rounded-md font-bold"
-                                                    onClick={() => navigate("/course/displaylectures", { state: { ...course } })}>
-                                                    <BsCollectionPlayFill />
-                                                </button>
-                                                <button className="bg-red-500 hover:bg-red-600 transition-all ease-in-out duration-300 text-xl py-2 px-4 rounded-md font-bold"
-                                                    onClick={() => {
-                                                        onCourseDelete(course?._id);
-                                                    }}>
-                                                    <BsTrash />
-                                                </button>
-                                            </td>
-                                        </tr>
-                                    );
-                                })}
-                            </tbody>
-                        </table>
-                    </div>
                 </div>
+                {/* 3rd child */}
+                <div className="overflow-x-scroll mx-[10%] w-[80%]">
+                    <table className="table w-full">
+                        <thead>
+                            <tr>
+                                <th className="text-center">S No</th>
+                                <th className="text-center">Course Title</th>
+                                <th className="text-center">Course category</th>
+                                <th className="text-center">Instructor</th>
+                                <th className="text-center">Total lectures</th>
+                                <th className="text-center">Description</th>
+                                <th className="text-center">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {myCourses?.map((course, idx) => {
+                                return (
+                                    <tr key={course?._id}>
+                                        <td>{idx + 1}</td>
+                                        <td>
+                                            <textarea readOnly
+                                                value={course?.title}
+                                                className="w-40 h-auto bg-transparent resize-none"
+                                            ></textarea>
+                                        </td>
+                                        <td className="text-center">{course?.category}</td>
+                                        <td className="text-center">{course?.createdBy}</td>
+                                        <td className="text-center">{course.numbersOfLectures}</td>
+                                        <td className="max-w-2xl overflow-y-auto text-ellipsis whitespace-nowrap">
+                                            <textarea
+                                                value={course?.description}
+                                                readOnly
+                                                className="w-80 h-auto bg-transparent resize-none ">
+                                            </textarea>
+                                        </td>
+                                        <td className="text-center w-40 flex flex-wrap items-center justify-center gap-4">
+                                            <button className="bg-green-500 hover:bg-green-600 transition-all ease-in-out duration-300 text-xl py-2 px-4 rounded-md font-bold"
+                                                onClick={() => navigate("/course/displaylectures", { state: { ...course } })}>
+                                                <BsCollectionPlayFill />
+                                            </button>
+                                            <button className="bg-red-500 hover:bg-red-600 transition-all ease-in-out duration-300 text-xl py-2 px-4 rounded-md font-bold"
+                                                onClick={() => {
+                                                    onCourseDelete(course?._id);
+                                                }}>
+                                                <BsTrash />
+                                            </button>
+                                        </td>
+                                    </tr>
+                                );
+                            })}
+                        </tbody>
+                    </table>
+                </div>
+
             </div>
             {loading && <Loader />} {/* Show loader when loading state is true */}
         </HomeLayout>
