@@ -27,7 +27,7 @@ export const createAccount = createAsyncThunk("/auth/signup", async (data) => {
 
 export const login = createAsyncThunk("/auth/login", async (data) => {
     try {
-        const res = axiosInstance.post("user/login", data);
+        const res = axiosInstance.post("/user/login", data);
         toast.promise(res, {
             loading: "Wait! authentication in progress...",
             success: (data) => {
@@ -133,7 +133,7 @@ const authSlice = createSlice({
 
                 localStorage.setItem("role", action?.payload?.user?.role);
 
-                state.isLoggedIn = true;
+                state.isLoggedIn = action?.payload?.success;
 
                 state.data = action?.payload?.user;
 
