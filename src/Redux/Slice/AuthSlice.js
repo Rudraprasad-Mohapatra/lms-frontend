@@ -44,6 +44,21 @@ export const login = createAsyncThunk("/auth/login", async (data) => {
 
 })
 
+export const forgotPassword = createAsyncThunk("/auth/forgotpassword", async (data) => {
+    try {
+        const res = axiosInstance.post("/user/forgotpassword", data);
+        toast.promise(res, {
+            loading: "Sending email for password reset...",
+            success: (response) => {
+                return response?.data?.message
+            },
+            error: "Unable to send email at this time..."
+        })
+    } catch (error) {
+        toast.error(error?.response?.data?.message);
+    }
+})
+
 export const logout = createAsyncThunk("/auth/logout", async () => {
     try {
         const res = axiosInstance.get("user/logout");
@@ -59,7 +74,6 @@ export const logout = createAsyncThunk("/auth/logout", async () => {
         toast.error(error?.response?.data?.message)
     }
 })
-
 
 export const updateProfile = createAsyncThunk("/user/update/profile", async (data) => {
     try {
@@ -108,11 +122,11 @@ const authSlice = createSlice({
 
                 state.role = action?.payload?.user?.role;
             })
-            .addCase(logout.fulfilled,(state)=>{
+            .addCase(logout.fulfilled, (state) => {
                 localStorage.clear();
                 state.data = {};
                 state.isLoggedIn = false;
-                state.role ="";
+                state.role = "";
             })
             .addCase(getUserData.fulfilled, (state, action) => {
                 localStorage.setItem("data", JSON.stringify(action?.payload?.user));

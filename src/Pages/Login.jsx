@@ -80,9 +80,12 @@ function Login() {
                         </button>
 
                         <p className="text-center">
-                            {`Do not have an account ?`}<Link to="/signup" className="link text-accent cursor-pointer">Signup</Link>
+                            {`Do not have an account ? `}<Link to="/signup" className="link text-accent cursor-pointer">Signup</Link>
                         </p>
                     </div>
+                    <p className="text-center">
+                        <Link to="/forgotpassword" className="link text-accent cursor-pointer">forgotpassword ?</Link>
+                        </p>
                 </form>
             </div>
         </HomeLayout>
