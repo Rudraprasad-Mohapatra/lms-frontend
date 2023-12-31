@@ -19,6 +19,7 @@ import NotFound from "./Pages/NotFound";
 import Checkout from "./Pages/Payment/Checkout"
 import CheckoutFailure from "./Pages/Payment/CheckoutFailure";
 import CheckoutSuccess from "./Pages/Payment/CheckoutSuccess";
+import ResetPassword from "./Pages/ResetPassword";
 import Signup from "./Pages/Signup";
 import EditProfile from "./Pages/User/EditProfile";
 import Profile from "./Pages/User/Profile";
@@ -34,6 +35,7 @@ function App() {
         <Route path="/signup" element={<Signup />}></Route>
         <Route path="/login" element={<Login />}></Route>
         <Route path="/forgotpassword" element={<ForgotPassword />}></Route>
+        <Route path="/reset-password/:accessToken" element={<ResetPassword />}></Route>
         <Route path="/contact" element={<Contact />}></Route>
         <Route path="/denied" element={<Denied />}></Route>
         <Route path="/course/description" element={<CourseDescription />}></Route>

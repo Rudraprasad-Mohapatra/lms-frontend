@@ -59,6 +59,23 @@ export const forgotPassword = createAsyncThunk("/auth/forgotpassword", async (da
     }
 })
 
+export const resetPassword = createAsyncThunk("/auth/reset-password", async ({passwordResetData, accessToken}) => {
+    try {
+        console.log("I am data inside slice resetPassword",passwordResetData)
+        console.log("I am accesstoken inside slice", accessToken);
+        const res = axiosInstance.post(`/user/reset/${accessToken}`, passwordResetData);
+        toast.promise(res, {
+            loading: "Resetting your password...",
+            success: (response) => {
+                return response?.data?.message
+            },
+            error: "Unable to reset your password at this time..."
+        })
+    } catch (error) {
+        toast.error(error?.response?.data?.message);
+    }
+})
+
 export const logout = createAsyncThunk("/auth/logout", async () => {
     try {
         const res = axiosInstance.get("user/logout");
