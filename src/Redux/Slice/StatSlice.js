@@ -4,35 +4,38 @@ import toast from "react-hot-toast";
 import axiosInstance from "../../Helpers/axiosInstance";
 
 const initialState = {
-    allUsersCount: 30,
-    subscribedCount: 50
+    allUsersCount: 100,
+    subscribedCount: 100
 };
 
 
 export const getStatsData = createAsyncThunk("stats/get", async () => {
-    try{
+    try {
         const response = axiosInstance.get("/admin/stats/users");
         toast.promise(response, {
             loading: "Getting the stats...",
             success: (data) => {
+                console.log(data);
                 return data?.data?.message;
             },
             error: "Failed to load data stats"
         });
-        return (await response.data);
+        return (await response).data;
     }
-    catch(error){
+    catch (error) {
         toast.error(error?.response?.data?.message);
     }
 })
+
 const statSlice = createSlice({
     name: "stat",
     initialState,
     reducers: {},
     extraReducers: (builder) => {
         builder.addCase(getStatsData.fulfilled, (state, action) => {
-            state.allUsersCount = action?.payload?.allUsersCount || 50;
-            state.subscribedCount = action?.payload?.subscribedUserCount || 30;
+            console.log(action);
+            state.allUsersCount = action?.payload?.registeredCount + action?.payload?.subscribedCount;
+            state.subscribedCount = action?.payload?.subscribedCount;
         })
     }
 });

@@ -14,7 +14,7 @@ function CreateCourse() {
     const [userInput, setUserInput] = useState({
         title: "",
         category: "",
-        createdBy:"",
+        createdBy: "",
         description: "",
         thumbnail: null,
         previewImage: "",
@@ -53,7 +53,7 @@ function CreateCourse() {
         }
 
         const response = await dispatch(createNewCourse(userInput));
-        console.log("response is ",response);
+        console.log("response is ", response);
         if (response?.payload?.success) {
             setUserInput({
                 title: "",
@@ -74,7 +74,7 @@ function CreateCourse() {
                 <form onSubmit={onFormSubmit} className="flex flex-col justify-center gap-5 rounded-lg p-4 text-white w-[700px] my-10 shadow-[0_0_10px_black] relative">
 
                     <Link className="absolute top-8 text-2xl link text-accent cursor-pointer">
-                        <AiOutlineArrowLeft onClick={navigate(-1)}/>
+                        <AiOutlineArrowLeft onClick={() => navigate(-1)} />
                     </Link>
                     <h1 className="text-center text-2xl font-bold">
                         Create New Course
@@ -122,7 +122,7 @@ function CreateCourse() {
                         <div className="flex flex-col gap-1">
                             <div className="flex flex-col gap-1">
                                 <label htmlFor="createdBy" className="text-lg font-semibold">
-                                Course Instructor
+                                    Course Instructor
                                 </label>
                                 <input
                                     type="text"
@@ -137,7 +137,7 @@ function CreateCourse() {
                             </div>
                             <div className="flex flex-col gap-1">
                                 <label htmlFor="category" className="text-lg font-semibold">
-                                Course category
+                                    Course category
                                 </label>
                                 <input
                                     type="text"
@@ -152,7 +152,7 @@ function CreateCourse() {
                             </div>
                             <div className="flex flex-col gap-1">
                                 <label htmlFor="description" className="text-lg font-semibold">
-                                Course Description
+                                    Course Description
                                 </label>
                                 <textarea
                                     type="text"
@@ -163,6 +163,7 @@ function CreateCourse() {
                                     value={userInput.description}
                                     onChange={handleUserInput}
                                     placeholder="Enter course description"
+                                    maxLength={190}
                                 />
                             </div>
                         </div>

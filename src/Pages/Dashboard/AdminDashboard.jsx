@@ -11,7 +11,7 @@ import { useNavigate } from "react-router-dom";
 import Loader from "../../Components/Loader/Loader.jsx";
 import HomeLayout from "../../Layouts/HomeLayout";
 import { deleteCourse, getAllCourses } from "../../Redux/Slice/CourseSlice.js";
-import { getPaymentRecord } from "../../Redux/Slice/RazorPaySlice.js";
+import { getFinalMonthSales, getMonthlySalesRecordsForYearData, getPaymentRecord } from "../../Redux/Slice/RazorPaySlice.js";
 import { getStatsData } from "../../Redux/Slice/StatSlice.js";
 
 ChartJS.register(ArcElement, BarElement, CategoryScale, Legend, LinearScale, Title, Tooltip);
@@ -22,7 +22,7 @@ function AdminDashboard() {
 
     const { allUsersCount, subscribedCount } = useSelector((state) => state.stat);
 
-    const { allPayments, finalMonths, monthlySalesRecord } = useSelector((state) => state.razorpay);
+    const { monthlySalesRecord } = useSelector((state) => state.razorpay);
 
     const [loading, setLoading] = useState(false);
 
@@ -32,7 +32,7 @@ function AdminDashboard() {
         datasets: [
             {
                 label: "User Details",
-                data: [allUsersCount, subscribedCount],
+                data: [allUsersCount, subscribedCount] || [30, 40],
                 backgroundColor: ["yellow", "green"],
                 borderWidth: 1,
                 borderColor: ["yellow", "green"],
@@ -47,7 +47,7 @@ function AdminDashboard() {
         datasets: [
             {
                 label: "Sales / Month",
-                data: [10, 20, 30, 40, 50, 60, 70],
+                data: monthlySalesRecord,
                 backgroundColor: ["rgb(255, 99, 132)"],
                 borderColor: ["White"],
                 borderWidth: 2
@@ -80,6 +80,8 @@ function AdminDashboard() {
                 await dispatch(getAllCourses());
                 await dispatch(getStatsData());
                 await dispatch(getPaymentRecord());
+                await dispatch(getMonthlySalesRecordsForYearData());
+                await dispatch(getFinalMonthSales());
             }
         )()
     }, [])
@@ -138,7 +140,7 @@ function AdminDashboard() {
                                         <span>Subscription</span>
                                         <span>Count</span>
                                     </p>
-                                    <h3 className="text-4xl font-bold">{allPayments?.count || 30}</h3>
+                                    <h3 className="text-4xl font-bold">{subscribedCount || 30}</h3>
                                 </div>
                                 <FcSalesPerformance className="text-yellow-500 text-5xl" />
                             </div>
@@ -149,7 +151,7 @@ function AdminDashboard() {
                                         <span>Total</span>
                                         <span>Revenue</span>
                                     </p>
-                                    <h3 className="text-4xl font-bold">{(allPayments?.count || 33) * 499}</h3>
+                                    <h3 className="text-4xl font-bold">{(subscribedCount || 33) * 499}</h3>
                                 </div>
                                 <GiMoneyStack className="text-green-500 text-5xl" />
                             </div>
@@ -164,8 +166,8 @@ function AdminDashboard() {
                             Course Overview
                         </h1>
 
-                        <button className="w-fit bg-yellow-500 hover:bg-yellow-600 transition-all duration-300 rounded-md py-2 px-4 font-semibold text-lg" onClick={() => { navigate("/course/create") }}>
-                            Create Course
+                        <button className="w-fit bg-yellow-500 hover:bg-yellow-600 transition-all duration-300 rounded-md py-2 px-4 font-semibold text-lg" onClick={() => navigate("/course/create")}>
+                            Create
                         </button>
                     </div>
                 </div>

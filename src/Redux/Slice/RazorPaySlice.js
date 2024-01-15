@@ -8,8 +8,8 @@ const initialState = {
     subscription_id: "",
     isPaymentVerified: false,
     allPayments: {},
-    finalMonths: {},
-    monthlySalesRecord: {}
+    finalMonthSales: {},
+    monthlySalesRecord: []
 }
 
 export const getRazorpayId = createAsyncThunk("/razorpay/getId", async () => {
@@ -24,7 +24,7 @@ export const getRazorpayId = createAsyncThunk("/razorpay/getId", async () => {
 export const purchaseCourseBundle = createAsyncThunk("/purchaseCourse", async () => {
     try {
         const response = await axiosInstance.post("/payments/subscribe");
-        console.log("PC: ",response);
+        console.log("PC: ", response);
         return response.data;
     } catch (error) {
         toast.error(error?.response?.data?.message);
@@ -76,7 +76,39 @@ export const cancelCourseBundle = createAsyncThunk("/payments/unsubscribe", asyn
         toast.error(error?.response?.data?.message);
     }
 })
+// Not Implemented
+export const getFinalMonthSales = createAsyncThunk("/admin/stats/lastmonthsales", async () => {
+    try {
+        const response = axiosInstance.get("/admin/stats/lastmonthsales");
+        toast.promise(response, {
+            loading: "loading finalmonth sales...",
+            success: (data) => {
+                return data?.data?.message;
+            },
+            error: "failed to fetch finalmonth sales"
+        });
+        return (await response).data;
+    } catch (error) {
+        toast.error(error?.response?.data?.message);
+    }
+})
 
+export const getMonthlySalesRecordsForYearData = createAsyncThunk("/admin/stats/monthlysales", async (year) => {
+    try {
+        const response = axiosInstance.get(`/admin/stats/monthlysales?year=${year || 2024}`);
+        toast.promise(response, {
+            loading: `loading ${year}'s sales data`,
+            success: (data) => {
+                return data?.data?.message;
+            },
+            error: `failed to fetch ${year}'s sales data`
+        })
+        return (await response).data;
+    }
+    catch (error) {
+        toast.error(error?.response?.data?.message);
+    }
+})
 
 const razorpaySlice = createSlice({
     name: "razorpay",
@@ -91,19 +123,22 @@ const razorpaySlice = createSlice({
                 state.subscription_id = action?.payload?.subscription_id;
             })
             .addCase(verifyUserPayment.fulfilled, (state, action) => {
-                console.log("Verify action is: ",action);
+                console.log("Verify action is: ", action);
                 toast.success(action?.payload?.message);
                 state.isPaymentVerified = action?.payload?.success;
             })
             .addCase(verifyUserPayment.rejected, (state, action) => {
-                console.log("Verify action is: ",action);
                 toast.success(action?.payload?.message);
                 state.isPaymentVerified = action?.payload?.success;
             })
             .addCase(getPaymentRecord.fulfilled, (state, action) => {
                 state.allPayments = action?.payload?.allPayments;
-                state.finalMonths = action?.payload?.finalMonths;
-                state.monthlySalesRecord = action?.payload?.monthlySalesRecord;
+            })
+            .addCase(getFinalMonthSales.fulfilled, (state, action) => {
+                state.finalMonthSales = action?.payload?.lastMonthSales;
+            })
+            .addCase(getMonthlySalesRecordsForYearData.fulfilled, (state, action) => {
+                state.monthlySalesRecord = action?.payload?.monthlyCompletedSubscriptions;
             })
     }
 })
