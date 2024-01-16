@@ -32,17 +32,23 @@ function DisplayLectures() {
 
     return (
         <HomeLayout>
-            <div className="flex flex-col gap-10 items-center justify-center min-h-[90vh] py-10 text-white mx-[5%]">
-                <div className="text-center text-2xl font-semibold text-yellow-500">
+            <div className="flex flex-col gap-10 items-center justify-center min-h-[90vh] py-5 text-white mx-[5%]">
+                <div className="text-center text-2xl pt-40px font-semibold text-yellow-500">
                     Course Name : {state.title}
                 </div>
                 {/* {lectures && lectures.length > 0 && <div className="flex justify-center gap-10 w-full"> */}
-                {<div className="flex justify-center gap-10 w-full">
+                {<div className="flex justify-center items-center gap-10 w-full flex-col lg:flex-row">
                     {/* left section for playing video and displaying course details to admin */}
-                    <div className="space-y-5 w-[28rem] p-2 rounded-lg shadow-[0_0_10px_black]">
+                    <div className="space-y-10 w-[80vw] h-auto p-2 rounded-lg shadow-[0_0_10px_black] custom-scrollbar">
+                        <h1 className="p-0 m-0">
+                            <span className="text-yellow-500">
+                                Title :&nbsp;
+                            </span>
+                            {lectures && (lectures[currentVideo]?.title || "This is title.")}
+                        </h1>
                         <video
-                            key={lectures && lectures[currentVideo]?.lecture?.secure_url} 
-                            src={lectures && lectures[currentVideo]?.lecture?.secure_url} 
+                            key={lectures && lectures[currentVideo]?.lecture?.secure_url}
+                            src={lectures && lectures[currentVideo]?.lecture?.secure_url}
                             className="object-fill rounded-tl-lg rounded-tr-lg w-full"
                             controls
                             disablePictureInPicture
@@ -53,12 +59,7 @@ function DisplayLectures() {
                         >
                         </video>
                         <div>
-                            <h1>
-                                <span className="text-yellow-500">
-                                    Title :&nbsp;
-                                </span>
-                                {lectures && (lectures[currentVideo]?.title || "This is title.")}
-                            </h1>
+
                             <p>
                                 <span className="text-yellow-500">
                                     Description :
@@ -69,7 +70,7 @@ function DisplayLectures() {
                     </div>
 
                     {/* right section for displaying list of lectures */}
-                    <ul className="w-[28rem] p-2 rounded-lg shadow-[0_0_10px_black]">
+                    <ul className="w-[80vw] lg:w-[40vw] h-auto max-h-[50vh] md:max-h-[70vh] custom-scrollbar overflow-y-scroll p-2 rounded-lg shadow-[0_0_10px_black]">
                         <li className="font-semibold text-xl text-yellow-500 flex items-center justify-between">
                             <p>Lectures List</p>
                             {role === "ADMIN" && (

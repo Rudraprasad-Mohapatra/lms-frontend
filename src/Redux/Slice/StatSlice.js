@@ -4,8 +4,8 @@ import toast from "react-hot-toast";
 import axiosInstance from "../../Helpers/axiosInstance";
 
 const initialState = {
-    allUsersCount: 100,
-    subscribedCount: 100
+    allUsersCount: 0,
+    subscribedCount: 0
 };
 
 
