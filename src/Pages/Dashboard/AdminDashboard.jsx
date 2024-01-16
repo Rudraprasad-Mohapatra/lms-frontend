@@ -98,7 +98,7 @@ function AdminDashboard() {
                 <div className="flex flex-wrap gap-5 m-auto mx-10">
                     {/* 1st child */}
                     <div className="flex flex-1 flex-col items-center gap-10 p-5 shadow-lg shadow-slate-700 rounded-md">
-                        <div className="w-80 h-80 transform transition-transform duration-500 hover:scale-105">
+                        <div className="w-60 h-60 md:w-80 md:h-80 transform transition-transform duration-500 hover:scale-105">
                             <Pie data={userData} />
                         </div>
 
@@ -130,7 +130,7 @@ function AdminDashboard() {
                     {/* 2nd child*/}
 
                     <div className="flex flex-1 flex-col items-center gap-10 p-5 shadow-lg shadow-slate-700 rounded-md">
-                        <div className="w-80 h-80 relative transform transition-transform duration-500 hover:scale-105">
+                        <div className="w-60 h-60 md:w-80 md:h-80 relative transform transition-transform duration-500 hover:scale-105">
                             <Bar className="absolute bottom-0 h-80 w-full" data={salesData} />
                         </div>
                         <div className="grid grid-cols-2 gap-5">
