@@ -162,7 +162,7 @@ function AdminDashboard() {
                 {/* 3rd child */}
                 <div className="mx-[10%] w-[80%] self-center flex flex-col items-center justify-center gap-10 mb-10">
                     <div className="flex w-full items-center justify-between">
-                        <h1 className="text-center text-3xl font-semibold">
+                        <h1 className="text-center text-2xl md:text-3xl font-semibold">
                             Course Overview
                         </h1>
 
