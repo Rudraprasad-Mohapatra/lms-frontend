@@ -1,16 +1,27 @@
+import { useEffect } from "react";
+import Typed from "typed.js";
+
 import aboutMainImage from "../assets/Images/aboutMainImage.png"
 import CarouselSlide from "../Components/CarouselSlide";
 import celebrities from "../Constants/CelebrityData";
 import HomeLayout from "../Layouts/HomeLayout";
 function AboutUs() {
-
+    useEffect(() => {
+        new Typed('#typed-about', {
+            strings: ['Affordable and quality education', 'Quality courses','Expert instructors','Unbeatable prices.', 'Affordable learning', 'Exceptional faculty', 'Boundless possibilities.'],
+            typeSpeed: 30,
+            backSpeed: 30,
+            loop: true,
+            cursorChar: '',
+            contentType: 'text',
+        });
+    },[]);
     return (
         <HomeLayout>
             <div className="pl-20 pt-20 flex flex-col text-white">
-                <div className="flex items-center gap-5 mx-10">
-                    <section className="w-1/2 space-y-10">
-                        <h1 className="text-5xl text-yellow-500 font-semibold">
-                            Affordable and quality education
+                <div className="flex flex-col lg:flex-row items-center gap-5 lg:mx-10">
+                    <section className="w-full">
+                        <h1 id="typed-about" className="text-5xl text-yellow-500 font-semibold py-5">
                         </h1>
                         <p className="text-xl text-gray-200">
                             Our goal is to provide the affordable and quality education to the world.
