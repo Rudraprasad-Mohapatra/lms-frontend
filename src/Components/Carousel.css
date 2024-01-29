@@ -1,0 +1,13 @@
+.fade-anim img {
+    animation: fadeAnim 1s ease-in-out;
+}
+
+@keyframes fadeAnim {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
