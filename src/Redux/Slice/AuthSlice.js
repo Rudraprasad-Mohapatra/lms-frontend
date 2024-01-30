@@ -25,7 +25,7 @@ export const createAccount = createAsyncThunk("/auth/signup", async (data) => {
     }
 })
 
-export const login = createAsyncThunk("/auth/login", async (data) => {
+export const login = createAsyncThunk("/auth/login", async (data, { rejectWithValue }) => {
     try {
         const res = axiosInstance.post("/user/login", data);
         toast.promise(res, {
@@ -40,6 +40,7 @@ export const login = createAsyncThunk("/auth/login", async (data) => {
         return finalRes;
     } catch (error) {
         toast.error(error?.response?.data?.message);
+        return rejectWithValue(error?.response?.data?.message);
     }
 
 })
@@ -59,9 +60,9 @@ export const forgotPassword = createAsyncThunk("/auth/forgotpassword", async (da
     }
 })
 
-export const resetPassword = createAsyncThunk("/auth/reset-password", async ({passwordResetData, accessToken}) => {
+export const resetPassword = createAsyncThunk("/auth/reset-password", async ({ passwordResetData, accessToken }) => {
     try {
-        console.log("I am data inside slice resetPassword",passwordResetData)
+        console.log("I am data inside slice resetPassword", passwordResetData)
         console.log("I am accesstoken inside slice", accessToken);
         const res = axiosInstance.post(`/user/reset/${accessToken}`, passwordResetData);
         toast.promise(res, {
